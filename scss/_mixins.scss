@@ -1,0 +1,330 @@
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+	$index: str-index($string, $search);
+
+	@if $index {
+		@return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+	}
+
+	@return $string;
+}
+
+
+@mixin container{
+	@include container-fixed;
+
+	@media (min-width: $screen-sm-min) {
+		width: $container-sm;
+	}
+	@media (min-width: $screen-md-min) {
+		width: $container-md;
+	}
+	@media (min-width: $screen-lg-min) {
+		width: $container-lg;
+	}
+}
+
+@mixin nav{
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  @include clearfix;
+
+  > li {
+    position: relative;
+    display: block;
+
+    > a {
+      position: relative;
+      display: block;
+      padding: $nav-link-padding;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: $nav-link-hover-bg;
+      }
+    }
+
+    // Disabled state sets text to gray and nukes hover/tab effects
+    &.disabled > a {
+      color: $nav-disabled-link-color;
+
+      &:hover,
+      &:focus {
+        color: $nav-disabled-link-hover-color;
+        text-decoration: none;
+        background-color: transparent;
+        cursor: $cursor-disabled;
+      }
+    }
+  }
+
+  // Open dropdowns
+  .open > a {
+    &,
+    &:hover,
+    &:focus {
+      background-color: $nav-link-hover-bg;
+      border-color: $link-color;
+    }
+  }
+
+  // Prevent IE8 from misplacing imgs
+  //
+  // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
+  > li > a > img {
+    max-width: none;
+  }
+}
+
+
+//custom mixin navbar-collapse : _navbar.scss
+@mixin navbar-collapse{
+  overflow-x: visible;
+  padding-right: $navbar-padding-horizontal;
+  padding-left:  $navbar-padding-horizontal;
+  border-top: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+  @include clearfix;
+  -webkit-overflow-scrolling: touch;
+
+  &.in {
+    overflow-y: auto;
+  }
+
+  @media (min-width: $grid-float-breakpoint) {
+    width: auto;
+    border-top: 0;
+    box-shadow: none;
+
+    &.collapse {
+      display: block !important;
+      height: auto !important;
+      padding-bottom: 0; // Override default setting
+      overflow: visible !important;
+    }
+
+    &.in {
+      overflow-y: visible;
+    }
+  }
+}
+// Navbar nav links
+//
+// Builds on top of the `.nav` components with its own modifier class to make
+// the nav the full height of the horizontal nav (above 768px).
+
+@mixin navbar-nav($nav-line-height){
+	@include nav;
+
+
+	margin: ($navbar-padding-vertical / 2) (-$navbar-padding-horizontal);
+
+	> li > a {
+		padding-top:    10px;
+		padding-bottom: 10px;
+		line-height: $nav-line-height;
+		color:$nav-link-color;
+	}
+
+	@media (max-width: $grid-float-breakpoint-max) {
+	// Dropdowns get custom display when collapsed
+	.open .dropdown-menu {
+	  position: static;
+	  float: none;
+	  width: auto;
+	  margin-top: 0;
+	  background-color: transparent;
+	  border: 0;
+	  box-shadow: none;
+	  > li > a,
+	  .dropdown-header {
+	    padding: 5px 15px 5px 25px;
+	  }
+	  > li > a {
+	    line-height: $line-height-computed;
+	    &:hover,
+	    &:focus {
+	      background-image: none;
+	    }
+	  }
+	}
+	}
+
+	// Uncollapse the nav
+	@media (min-width: $grid-float-breakpoint) {
+	float: left;
+	margin: 0;
+
+	> li {
+	  float: left;
+	  > a {
+	    padding-top:    $navbar-padding-vertical;
+	    padding-bottom: $navbar-padding-vertical;
+	  }
+	}
+	}
+
+	@media (min-width: $screen-md-min) {
+		float: right !important;
+		margin-right: -$navbar-padding-horizontal;
+
+		~ .navbar-right {
+			margin-right: 0;
+		}	
+		
+	}
+}
+
+
+@mixin beautifulInput($beautifulInputLabelColor: $dirtyWhite){
+	
+
+	input[type="checkbox"] {
+	    display:none;
+	}
+	input[type="checkbox"] + label {
+	    color: $beautifulInputLabelColor;
+	    font-family:Arial, sans-serif;
+	    font-size:14px;
+	}
+	input[type="checkbox"] + label span {
+	    display:inline-block;
+	    width:19px;
+	    height:19px;
+	    margin:-1px 4px 0 0;
+	    vertical-align:middle;
+	    cursor:pointer;
+	    -moz-border-radius:  50%;
+	    border-radius:  50%;
+		background-color:$Orange;
+	}
+
+	input[type="checkbox"] + label span {
+	     opacity:0;
+	}
+
+	input[type="checkbox"]:checked + label span{
+	     opacity:1;
+	}
+
+	input[type="checkbox"] + label span,
+	input[type="checkbox"]:checked + label span {	
+	  -webkit-transition:opacity 0.4s linear;
+	  -o-transition:opacity 0.4s linear;
+	  -moz-transition:opacity 0.4s linear;
+	  transition:opacity 0.4s linear;
+	}
+}
+
+@mixin callToActionButton($callToActionButtonColor:$dirtyWhite,$callToActionButtonColorHover:$milkWhite){
+	padding:15px 45px;
+	
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight:200;
+	text-transform: uppercase;
+	
+	display:inline-block;
+	margin-top:20px;
+
+	box-sizing:border-box;
+	border:1px solid $callToActionButtonColor;
+	border-radius:50px;
+	
+	color:$callToActionButtonColor;
+
+	&:hover{
+		-moz-box-shadow: 0 0 3px $callToActionButtonColorHover;
+		-webkit-box-shadow: 0 0 3px $callToActionButtonColorHover;
+		box-shadow: 0px 0px 3px $callToActionButtonColorHover;
+		
+		color:$callToActionButtonColorHover;
+	}
+
+}
+
+@mixin containerTextCentered($containerTextColor: $milkWhite){
+	@include container;
+	color:$containerTextColor;
+	text-align:center;
+
+	padding-bottom:50px;
+}
+
+@mixin inputPlaceholderAnimate($animatedInputPlaceholderColor: $dirtyWhite){
+	/*
+	SEE : https://codepen.io/manifestinteractive/pen/viaAK
+	*/
+	/* Place Holder CSS */
+	&::-webkit-input-placeholder {
+		color: $animatedInputPlaceholderColor;
+		opacity: 0.4;
+		-webkit-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:-moz-placeholder {
+		color: $animatedInputPlaceholderColor;
+		opacity: 0.4;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&::-moz-placeholder {
+		color: $animatedInputPlaceholderColor;
+		opacity: 0.4;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:-ms-input-placeholder {  
+		color: $animatedInputPlaceholderColor	;
+		opacity: 0.4;
+		-ms-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+
+	/* Place Holder CSS for Focus */
+	&:hover::-webkit-input-placeholder {
+		opacity: 0.90;
+		-webkit-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:hover:-moz-placeholder {
+		opacity: 0.90;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:hover::-moz-placeholder {
+		opacity: 0.90;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:hover:-ms-input-placeholder {  
+		opacity: 0.90;
+		-ms-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+
+	/* Place Holder CSS for Focus */
+	&:focus::-webkit-input-placeholder {
+		opacity: 0;
+		-webkit-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:focus:-moz-placeholder {
+		opacity: 0;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:focus::-moz-placeholder {
+		opacity: 0;
+		-moz-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+	&:focus:-ms-input-placeholder {  
+		opacity: 0;
+		-ms-transition: opacity 0.35s ease-in-out;
+		transition: opacity 0.35s ease-in-out;
+	}
+}

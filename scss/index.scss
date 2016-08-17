@@ -1,0 +1,348 @@
+
+@import '../assets/bootstrap/bootstrap';
+@import 'mixins';
+@import 'variables';
+
+@import 'https://fonts.googleapis.com/css?family=Catamaran:900|Roboto:700|Source+Sans+Pro:200,400';
+
+///////////////////////////////////////////////////////////////
+///
+///
+///
+//////////////////////////////////////////////////////////////
+
+
+h2{
+	margin: 40px 0 25px;
+	font-family: 'Roboto', sans-serif;
+}
+
+.ctaButton{
+	@include callToActionButton;
+}
+
+.sectionContainerWrapper{
+	@include containerTextCentered;
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		The Hero(full width) backgrounds
+///
+//////////////////////////////////////////////////////////////
+
+#heroBGHeader{
+	background-color:$navbar-color;
+}
+#heroCategoriesBGnav{
+	background-color: $categoryNavBGColor;
+}
+#heroBannerBG{
+	display:flex;
+	align-items:center;
+	justify-content: center;
+
+	background: url('../images/exMachina.png') no-repeat center center;
+	-webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	  @include container-fixed;
+}
+//Make it CLASS since its used more then ones
+.heroCategoriesBG{
+	background: url('../images/bg.jpg') center center/cover  no-repeat;
+}
+#heroFilmsBG{
+	background-color: #242424;
+}
+#heroTestimonialsBG{
+	background: url('../images/bgTestimonials.jpg') center center/cover  no-repeat;
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		The site header
+///
+//////////////////////////////////////////////////////////////
+
+#siteHeader{
+	@include container;
+	.row{
+		@include make-row;
+	}
+	.siteLogo{
+		@include make-md-column(4);
+
+		font-family: 'Catamaran', sans-serif;
+		font-size:4em;
+		color:white;
+		
+		//NOTE: Works only because of the simplistic layout
+		text-align: center;
+	}
+	.navbarCollapse{
+		@include navbar-collapse;
+		text-align:center;
+	}
+
+	.siteMenu{
+		@include navbar-nav(4em);
+		font-size:0.9em;
+
+
+		@media(min-width:$screen-sm-min) and (max-width:$screen-md-min){
+			float:none;
+			display:inline-block;
+		}
+	}
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		Navigation for video categorys
+///
+//////////////////////////////////////////////////////////////
+
+#categoryNav{
+	list-style: none;
+	background-color: $categoryNavBGColor;
+	text-align:center;
+	padding-left:0;
+
+	line-height:2.5em;
+
+	@media(min-width:$screen-md-min){
+		line-height: 3.6em;
+
+	}
+
+	> li{
+		@include make-sm-column(2);
+		
+		> a {
+			position: relative;
+			display: block;
+
+
+			color: #FFF;
+
+			&:hover,
+			&:focus {
+      		}
+    	}
+	}
+
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		Movie preview wrapper
+///
+//////////////////////////////////////////////////////////////
+
+
+#moviewPreviewWrapper{
+	display:inline-block;
+
+	text-align:center;
+	color:rgb(201, 207, 207);
+	
+	h1{
+		font-family: 'Roboto', sans-serif;
+		text-shadow: 1px 2px 2px #000;
+	}
+
+	p{
+		font-size:1.6em;
+		
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight:200;
+		text-shadow: 0 1px 2px #000;
+	}
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		Search by movie category
+///
+//////////////////////////////////////////////////////////////
+
+
+#movieCategoryListWrapper{
+	@include containerTextCentered();
+
+	p{
+		color: $dirtyWhite;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight:200;
+		margin-bottom:3em;
+	}
+
+	form:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+
+	.listItemWrapper{
+		text-align: left;
+		display:inline-block;
+		width: 50%;
+		float:left;
+
+		padding-left:50px;
+
+
+		@include beautifulInput;
+
+		label{
+			font-weight:normal;
+		}
+
+		@media(min-width:$screen-sm-min){
+			width:33%
+		}
+		@media(min-width:$screen-lg-min){
+			width:25%;
+		}
+	}
+}
+
+
+///////////////////////////////////////////////////////////////
+///
+///		Movie Flashcards
+///
+//////////////////////////////////////////////////////////////
+<
+
+
+///////////////////////////////////////////////////////////////
+///
+///		Testimonials
+///
+//////////////////////////////////////////////////////////////
+
+
+#testemoniText{
+	font-weight:500;
+	font-size:1.3em;
+
+	@include make-xs-column-offset(1);
+	@include make-xs-column(10);
+}
+#carouselRow{
+	@include make-row;
+
+	display:flex;
+	flex-direction:row;
+
+	align-items:center;
+
+	margin-bottom:35px;
+
+	> .carouselLeft{
+		font-size:$font-size-h1;
+		
+		padding:25px;
+		@include make-xs-column(2);
+		@include make-xs-column-offset(1);
+
+		@include make-md-column-offset(2);
+	}
+
+	> .carouselRight{
+		font-size:$font-size-h1;
+	
+		padding:25px;
+		@include make-xs-column(2);
+
+	}
+
+	> .carouselContent{
+		@include make-xs-column(6);
+
+		@include make-md-column(4);
+		text-align:center;
+
+		img{
+			@include img-responsive;
+			border-radius:50%;
+			margin:0 auto;
+		}
+
+		h3{
+			margin: 15px 0 5px;
+		}
+
+		i{
+			font-weight:500;
+			opacity:0.8;
+		}
+	}
+}
+
+
+
+///////////////////////////////////////////////////////////////
+///
+///		contact form
+///
+//////////////////////////////////////////////////////////////
+
+#contactForm{
+	input{
+		//completly reset the input style
+		border: none;
+		background-color:transparent !important;
+		outline: none;
+	    -webkit-box-shadow: none;
+	    -moz-box-shadow: none;
+	    box-shadow: none;
+	    
+    	border-bottom:1px solid $formBottomBorderColor ;
+		
+		width:100%;
+
+    	padding: 10px 5px;
+    	margin:0 0 25px;
+
+    	&:hover,
+    	&:focus{
+    		border-bottom:1px solid $formBottomBorderColorHover;
+    	}
+		
+		@include inputPlaceholderAnimate();
+	}
+	#usrName{
+		@include make-md-column(5);
+		@include make-md-column-offset(1);
+	}
+	#usrEmail{
+		@include make-md-column(5);
+	}
+	#usrText{
+		@include make-md-column(10);
+		@include make-md-column-offset(1);
+
+		margin-top:100px;
+	}
+}
+
+
+
+///////////////////////////////////////////////////////////////
+///
+///		google-map container
+///
+//////////////////////////////////////////////////////////////
+
+#map{
+	min-height:500px;
+}
